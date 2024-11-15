@@ -1,36 +1,71 @@
-
+mod text_buffer;
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct RopeWeight(pub u64);
 
-pub enum Rope {
-    Node { weight: RopeWeight, left: Box<Rope>, right: Box<Rope> },
-    Leaf { weight: RopeWeight, content: String },
+enum Node {
+    BranchNode { weight: RopeWeight, left: Box<Node>, right: Box<Node> },
+    LeafNode(String),
 }
 
-pub struct RopeLike {
-    left: Box<Option<RopeLike>>,
-    right: Box<Option<RopeLike>>,
-    weight: RopeWeight,
-    content: Option<String>,
+pub struct Rope {
+    root: Node,
 }
+
+
 
 impl Rope {
-    fn collect_leaves_rec(&self) -> String {
-        match self {
-            Rope::Node { left, right, .. } => left.collect_leaves_rec() + &right.collect_leaves_rec(),
-            Rope::Leaf { content, .. } => content.to_owned(),
-        }
+    // fn collect_leaves_rec(&self) -> String {
+    //     match self.root {
+    //         Node::BranchNode { left, right, .. } => left.collect_leaves_rec() + &right.collect_leaves_rec(),
+    //         Node::LeafNode { content, .. } => content.to_owned(),
+    //     }
+    // }
+    fn debug_print(&self) -> String {
+        //
+        "Not inplemented yet".to_string()
     }
-    fn collect_leaves(&self) -> Vec<Rope> {
+    fn collect_leaves(&self) -> Vec<Node> {
         let mut stack = Vec::new();
         let mut leaves = Vec::new();
-        let c = self;
-        while true {
-            stack.push(c);
-            let c = 
+        let current_node = self.root;
+        loop {
+            stack.push(current_node);
+            let c = ;
         }
         while !stack.is_empty() {
 
         }
     }
+    fn insert_text(&self, cursor: u64, text: String) {
+        // split
+        // append_node
+        // concat
+        // rebalance
+    }
+    fn delete_text(&self, cursor: u64, count: u64) {
+        // middle = split to cursor
+        // right = split middle to count
+        // concat rope + right
+        // delete middle
+        // rebalance
+    }
+    fn concat(&self, right: Node) {
+        // get old root weight
+        // new root node
+        // set new root weight, left, right
+        // set new root as root
+    }
+    fn split(&self, cursor: u64) -> Rope {
+        // complicated hehehe
+    }
 }
+impl Node {
+    fn rotate_left() {}
+    fn rotate_right() {}
+    fn get_weight() {}
+    fn rebalance() {} //rebalance child first
+}
+impl Node::BranchNode {
+    fn set_left() {}
+}
+
